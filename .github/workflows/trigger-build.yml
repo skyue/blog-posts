@@ -1,0 +1,17 @@
+name: Trigger Astro Blog Build
+
+on:
+  push:
+    branches:
+      - main
+
+jobs:
+  trigger:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Trigger Cloudflare Pages Deploy
+        run: |
+          echo "触发 astro-blog 重新构建..."
+          curl -X POST "${{ secrets.CF_DEPLOY_HOOK }}" \
+            -H "Content-Type: application/json" \
+            || echo "触发失败，请检查 CF_DEPLOY_HOOK 配置"
